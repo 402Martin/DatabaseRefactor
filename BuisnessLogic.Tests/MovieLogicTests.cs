@@ -1,4 +1,6 @@
 using BusinessLogic;
+using DataAcess;
+using DataAcess.repositories;
 using Domain;
 using Dtos;
 
@@ -8,12 +10,22 @@ namespace BuisnessLogic.Tests;
 public class MovieLogicTests
 {
     private MovieLogic _movieLogic;
-
+    private MovieRepository _repository;
+    private SqlContext _context;
+    private readonly InMemoryContext _contextFactory = new InMemoryContext();
     [TestInitialize]
-    public void Setup()
+    public void SetUp()
     {
-        _movieLogic = new MovieLogic();
+        _context = _contextFactory.CreateDbContext();
+        _repository = new MovieRepository(_context);
+        _movieLogic = new MovieLogic(_repository);
     }
+    
+    [TestCleanup]
+    public void CleanUp()
+    {
+        _context.Database.EnsureDeleted();
+    } 
 
     [TestMethod]
     public void AddMovie_ShouldAddMovieToList()

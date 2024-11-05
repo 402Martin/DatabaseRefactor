@@ -5,14 +5,15 @@ namespace BusinessLogic;
 
 using System.Collections.Generic;
 using System.Linq;
+using DataAcess.repositories;
 
 public class MovieLogic
 {
-    private List<Movie> _movies;
+    private MovieRepository _movies;
 
-    public MovieLogic()
+    public MovieLogic(MovieRepository movies)
     {
-        _movies = new List<Movie>();
+        _movies =  movies;
     }
 
     public void AddMovie(MovieDto movieDto)
@@ -23,12 +24,12 @@ public class MovieLogic
 
     public List<MovieDto> GetAllMovies()
     {
-        return _movies.Select(movie=> new MovieDto(movie)).ToList();
+        return _movies.GetAll().Select((x)=> new MovieDto(x)).ToList();
     }
 
     private Movie? GetMovieByTitle(string title)
     {
-        return _movies.FirstOrDefault(m => m.Title == title);
+        return _movies.getByTitle(title);
     }
 
 }

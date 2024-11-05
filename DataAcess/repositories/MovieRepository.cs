@@ -18,4 +18,12 @@ public class MovieRepository
         _context.SaveChanges();
         return movieDb.Entity;
     }
+    public List<Movie> GetAll()
+    {
+        return _context.Movies.ToList();
+    }
+    public Movie? getByTitle(string title)
+    {
+        return _context.Movies.FirstOrDefault(m => m.Title == title);
+    }
 }
