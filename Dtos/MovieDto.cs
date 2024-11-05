@@ -8,6 +8,7 @@ public class MovieDto
     public DirectorDto? Director { get; set; }
     public List<CategoryDto> Categories { get; set; } = new List<CategoryDto>();
 
+    public MovieDto(){}
     public MovieDto(Movie movie)
     {
         Title = movie.Title;
