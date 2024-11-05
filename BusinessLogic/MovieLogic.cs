@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using DataAccess.Repositories;
+using Domain;
 using Dtos;
 
 namespace BusinessLogic;
@@ -8,11 +9,10 @@ using System.Linq;
 
 public class MovieLogic
 {
-    private List<Movie> _movies;
-
-    public MovieLogic(List<Movie> movies) 
+    private MovieRepository _movies;
+    public MovieLogic(MovieRepository repository)
     {
-        _movies = movies;
+        _movies = repository;
     }
 
     public void AddMovie(MovieDto movieDto)
@@ -23,7 +23,7 @@ public class MovieLogic
 
     public List<MovieDto> GetAllMovies()
     {
-        return _movies.Select(movie=> new MovieDto(movie)).ToList();
+        return _movies.getAll().Select(x=> new MovieDto(x)).ToList();
     }
     
 }

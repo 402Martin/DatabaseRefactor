@@ -1,4 +1,6 @@
 using BusinessLogic;
+using DataAccess;
+using DataAccess.Repositories;
 using Domain;
 using Dtos;
 
@@ -8,13 +10,19 @@ namespace BuisnessLogic.Tests;
 public class MovieLogicTests
 {
     private MovieLogic _movieLogic;
-    private readonly List<Movie> _movieList = new List<Movie>();
     private MovieDto _movieDto;
+    private MovieRepository _repository;
+    private SqlContext _context;
+    private readonly InMemoryContext _contextFactory = new InMemoryContext();    
+
 
     [TestInitialize]
     public void Setup()
     {
-        _movieLogic = new MovieLogic(_movieList);
+        _context = _contextFactory.CreateDbContext();
+        _repository = new MovieRepository(_context);
+
+        _movieLogic = new MovieLogic(_repository);
          _movieDto = new MovieDto()
         {
             Title = "Inception",
@@ -29,8 +37,8 @@ public class MovieLogicTests
 
         _movieLogic.AddMovie(_movieDto);
         
-        Assert.AreEqual(1, _movieList.Count);
-        Assert.AreEqual(_movieDto.Title, _movieList[0].Title);
+        Assert.AreEqual(1, _context.Movies.Count());
+        Assert.AreEqual(_movieDto.Title, _context.Movies.ToList()[0].Title);
     }
 
     [TestMethod]
@@ -43,8 +51,9 @@ public class MovieLogicTests
             Categories = new List<Category> { new Category { Name = "Action" } }
         };
 
-        _movieList.Add(_movieDto.ToEntity());
-        _movieList.Add(secondMovie);
+        _context.Add(_movieDto.ToEntity());
+        _context.Add(secondMovie);
+        _context.SaveChanges();
 
         var allMovies = _movieLogic.GetAllMovies();
 
