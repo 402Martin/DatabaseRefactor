@@ -12,7 +12,8 @@ public class MovieLogicTests
     [TestInitialize]
     public void Setup()
     {
-        _movieLogic = new MovieLogic();
+        var list = new List<Movie>();
+        _movieLogic = new MovieLogic(list);
     }
 
     [TestMethod]
