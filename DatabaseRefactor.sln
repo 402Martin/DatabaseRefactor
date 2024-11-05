@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Front", "Front\Front.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAcess", "DataAcess\DataAcess.csproj", "{3845F350-2EA4-4D05-9300-99303CEBB4DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAcess.Tests", "DataAcess.Tests\DataAcess.Tests.csproj", "{EE3F95AF-CBE6-4955-8485-8355224DD655}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{3845F350-2EA4-4D05-9300-99303CEBB4DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3845F350-2EA4-4D05-9300-99303CEBB4DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3845F350-2EA4-4D05-9300-99303CEBB4DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE3F95AF-CBE6-4955-8485-8355224DD655}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE3F95AF-CBE6-4955-8485-8355224DD655}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE3F95AF-CBE6-4955-8485-8355224DD655}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE3F95AF-CBE6-4955-8485-8355224DD655}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

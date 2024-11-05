@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAcess;
 
-public class SqlContext: DbContext
+public class SqlContext : DbContext
 {
     public DbSet<Movie> Movies { get; set; }
     public DbSet<Director> Directors { get; set; }
@@ -11,6 +11,7 @@ public class SqlContext: DbContext
 
     public SqlContext(DbContextOptions<SqlContext> options) : base(options)
     {
-        Database.Migrate();
+        if (!Database.IsInMemory())
+            Database.Migrate();
     }
 }
