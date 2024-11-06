@@ -6,6 +6,7 @@ public class CategoryDto
 {
     public string Name { get; set; } = String.Empty;
 
+    public CategoryDto(){}
     public CategoryDto(Category cat)
     {
         Name = cat.Name;
