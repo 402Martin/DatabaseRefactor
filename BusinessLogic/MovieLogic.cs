@@ -21,8 +21,7 @@ public class MovieLogic
         _movies.Add(movie);
     }
 
-    public List<MovieDto> GetAllMovies()
-    {
+    public List<MovieDto> GetAllMovies() {
         return _movies.Select(movie=> new MovieDto(movie)).ToList();
     }
 
