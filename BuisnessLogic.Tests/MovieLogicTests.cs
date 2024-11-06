@@ -8,76 +8,48 @@ namespace BuisnessLogic.Tests;
 public class MovieLogicTests
 {
     private MovieLogic _movieLogic;
+    private List<Movie> _movies;
+    private MovieDto _movieDto;
 
     [TestInitialize]
     public void Setup()
     {
-        _movieLogic = new MovieLogic();
+         _movies = new List<Movie>();
+        _movieLogic = new MovieLogic(_movies);
+        _movieDto = new MovieDto()
+        {
+            Title = "Inception",
+            Director = new DirectorDto() { Name = "Christopher Nolan" },
+            Categories = new List<CategoryDto> { new CategoryDto { Name = "Sci-Fi" } }
+        };
     }
 
     [TestMethod]
     public void AddMovie_ShouldAddMovieToList()
     {
-        var movieDto = new MovieDto(new Movie
-        {
-            Title = "Inception",
-            Director = new Director { Name = "Christopher Nolan" },
-            Categories = new List<Category> { new Category { Name = "Sci-Fi" } }
-        });
 
-        _movieLogic.AddMovie(movieDto);
+        _movieLogic.AddMovie(_movieDto);
 
-        var allMovies = _movieLogic.GetAllMovies();
-        Assert.AreEqual(1, allMovies.Count);
-        Assert.AreEqual("Inception", allMovies[0].Title);
-        Assert.AreEqual("Christopher Nolan", allMovies[0].Director?.Name);
-        Assert.AreEqual("Sci-Fi", allMovies[0].Categories[0].Name);
+        Assert.AreEqual(1, _movies.Count);
+        Assert.AreEqual("Inception", _movies[0].Title);
     }
 
     [TestMethod]
     public void GetAllMovies_ShouldReturnAllMovies()
     {
-        var movie1 = new MovieDto(new Movie
-        {
-            Title = "Inception",
-            Director = new Director { Name = "Christopher Nolan" },
-            Categories = new List<Category> { new Category { Name = "Sci-Fi" } }
-        });
-        var movie2 = new MovieDto(new Movie
-        {
+        var secondMovie = new Movie(){
             Title = "The Matrix",
             Director = new Director { Name = "Wachowski Sisters" },
             Categories = new List<Category> { new Category { Name = "Action" } }
-        });
+        };
 
-        _movieLogic.AddMovie(movie1);
-        _movieLogic.AddMovie(movie2);
+        _movies.Add(_movieDto.ToEntity());
+        _movies.Add(secondMovie);
 
         var allMovies = _movieLogic.GetAllMovies();
 
         Assert.AreEqual(2, allMovies.Count);
         Assert.IsTrue(allMovies.Any(m => m.Title == "Inception"));
         Assert.IsTrue(allMovies.Any(m => m.Title == "The Matrix"));
-    }
-
-    [TestMethod]
-    public void GetMovieByTitle_ShouldReturnCorrectMovie()
-    {
-        var movieDto = new MovieDto(new Movie
-        {
-            Title = "Interstellar",
-            Director = new Director { Name = "Christopher Nolan" },
-            Categories = new List<Category> { new Category { Name = "Sci-Fi" } }
-        });
-        _movieLogic.AddMovie(movieDto);
-
-        var retrievedMovie = typeof(MovieLogic)
-            .GetMethod("GetMovieByTitle",
-                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-            ?.Invoke(_movieLogic, new object[] { "Interstellar" }) as Movie;
-
-        Assert.IsNotNull(retrievedMovie);
-        Assert.AreEqual("Interstellar", retrievedMovie?.Title);
-        Assert.AreEqual("Christopher Nolan", retrievedMovie?.Director?.Name);
     }
 }

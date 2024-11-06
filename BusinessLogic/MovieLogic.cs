@@ -10,9 +10,9 @@ public class MovieLogic
 {
     private List<Movie> _movies;
 
-    public MovieLogic()
+    public MovieLogic(List<Movie> movies)
     {
-        _movies = new List<Movie>();
+        _movies = movies;
     }
 
     public void AddMovie(MovieDto movieDto)
@@ -26,9 +26,5 @@ public class MovieLogic
         return _movies.Select(movie=> new MovieDto(movie)).ToList();
     }
 
-    private Movie? GetMovieByTitle(string title)
-    {
-        return _movies.FirstOrDefault(m => m.Title == title);
-    }
 
 }
